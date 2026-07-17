@@ -12,7 +12,7 @@ SettingTxtDialog::SettingTxtDialog( QWidget *parent, const QByteArray &old, qint
 
         QString str( copy );
         str.replace( "\r\n", "\n" );//maybe not needed to do this in 2 steps, but there may be some reason the file only uses "\n", so do it this way to be safe
-        QStringList parts = str.split( "\n", QString::SkipEmptyParts );
+        QStringList parts = str.split( "\n", Qt::SkipEmptyParts );
         foreach( const QString &part, parts )
         {
             QString p = part;

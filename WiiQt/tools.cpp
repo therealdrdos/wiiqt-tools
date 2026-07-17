@@ -257,7 +257,7 @@ QString CleanSvnStr( const QString &orig )
         return ret;
 
     QRegExp notNum( "[^0-9]" );
-    QStringList parts = ret.split( notNum, QString::SkipEmptyParts );
+    QStringList parts = ret.split( notNum, Qt::SkipEmptyParts );
     if( parts.size() )
         return parts.at( parts.size() - 1 );
 

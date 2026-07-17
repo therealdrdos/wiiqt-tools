@@ -2,6 +2,7 @@
 #define NUSDOWNLOADER_H
 
 #include <QNetworkAccessManager>
+#include <QElapsedTimer>
 #include <QNetworkReply>
 
 #include "includes.h"
@@ -146,7 +147,7 @@ private:
     QNetworkAccessManager manager;
     QQueue< downloadJob > downloadQueue;
     QNetworkReply *currentDownload;
-    QTime downloadTime;
+    QElapsedTimer downloadTime;
     QString currentJobText;
     downloadJob dlJob;
 

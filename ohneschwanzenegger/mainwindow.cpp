@@ -773,7 +773,7 @@ bool MainWindow::InstallNUSItem( NusJob job )
         }
         else
         {
-            qWarning() << "type" << hex << t.Type( i );
+            qWarning() << "type" << Qt::hex << t.Type( i );
             goto error;
         }
     }

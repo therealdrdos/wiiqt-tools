@@ -1049,7 +1049,7 @@ QString U8::FstName( const FEntry *entry )
         return QString();
 
     int nameStart = swap24( entry->NameOffset ) + NameOff + rootnode_offset;
-    return data.mid( nameStart, nameStart + 0x100 );
+    return QString::fromUtf8( data.constData() + nameStart );
 }
 
 QString U8::FstName( quint32 i )

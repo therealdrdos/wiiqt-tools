@@ -1,5 +1,6 @@
 
 #include "svnrev.h"
+#include <algorithm>
 
 #include "../WiiQt/includes.h"
 #include "../WiiQt/nandbin.h"
@@ -420,7 +421,7 @@ QList< quint64 > InstalledTitles()
             ret << tid;
         }
     }
-    qSort( ret.begin(), ret.end() );
+    std::sort( ret.begin(), ret.end() );
     return ret;
 }
 

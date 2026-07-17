@@ -1,0 +1,19 @@
+# qmake / build output
+*.o
+*.obj
+moc_*.cpp
+moc_*.h
+qrc_*.cpp
+ui_*.h
+Makefile*
+.qmake.stash
+.qmake.cache
+build-*/
+*.app
+*.dmg
+
+# wii dumps and keys
+*.bin
+
+# macOS
+.DS_Store

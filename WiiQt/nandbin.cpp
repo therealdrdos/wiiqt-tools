@@ -1514,8 +1514,6 @@ bool NandBin::SetData( quint16 idx, const QByteArray &data )
             return false;
         }
 
-        //setup random number stuff to emulate wear leveling
-
         //now grab the clusters that will be used from the list
         //qDebug() << "trying to find" << ( clCnt - fts.size() ) << "free clusters";
         while( fts.size() < clCnt )

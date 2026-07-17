@@ -33,7 +33,7 @@ QList<QByteArray>BadSharedItems;//remember bad shared items
 
 bool CheckTitleIntegrity( quint64 tid );
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #include <windows.h>
 #define C_STICKY 31
 #define C_CAP    192
@@ -121,7 +121,7 @@ void PrintColoredString( const char *msg, int highlite )
             QString m2 = s.trimmed();
             m.resize( m.indexOf( m2 ) );
             printf( "%s", m.toLatin1().data() );				//print all leading whitespace
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
             SetConsoleTextAttribute( hConsole, highlite );
 #else
             put_indicator( &color_indicator[ C_LEFT ] );
@@ -129,7 +129,7 @@ void PrintColoredString( const char *msg, int highlite )
             put_indicator( &color_indicator[ C_RIGHT ] );
 #endif
             printf( "%s", m2.toLatin1().data() );				//print text
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
             SetConsoleTextAttribute( hConsole, origColor );
 #else
             put_indicator( &color_indicator[ C_LEFT ] );
@@ -1312,7 +1312,7 @@ error:
 int main( int argc, char *argv[] )
 {
     QCoreApplication a( argc, argv );
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     origColor = GetColor();
     hConsole = GetStdHandle( STD_OUTPUT_HANDLE );
 #endif

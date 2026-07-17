@@ -37,7 +37,7 @@ QByteArray DecryptAsh( const QByteArray ba )
     if( size > BUFFER_SIZE )
     {
         qWarning() << "DecryptAsh(): this file was built with a buffer to small to deal with this archive.  Build it with a bigger one and try again."
-                << hex << size << ">" << BUFFER_SIZE;
+                << Qt::hex << size << ">" << BUFFER_SIZE;
         return QByteArray();
     }
 

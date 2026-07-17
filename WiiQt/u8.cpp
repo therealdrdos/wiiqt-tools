@@ -163,10 +163,10 @@ bool U8::RenameEntry( const QString &path, const QString &newName )
     else if( RU( nFstSize, U8_HEADER_ALIGNMENT ) > RU( fstSize, U8_HEADER_ALIGNMENT ) )
         dataAdjustment = RU( ( nFstSize - fstSize ), U8_HEADER_ALIGNMENT );
 
-    qDebug() << "old size:" << hex << oldNameLen\
-            << "new size:" << hex << newNameLen\
-            << "difference:" << hex << difference
-            << "dataAdjustment:" << hex << dataAdjustment;
+    qDebug() << "old size:" << Qt::hex << oldNameLen\
+            << "new size:" << Qt::hex << newNameLen\
+            << "difference:" << Qt::hex << difference
+            << "dataAdjustment:" << Qt::hex << dataAdjustment;
     QByteArray nFstData( ( qFromBigEndian( fst[ 0 ].FileLength ) ) * 0xc, '\0' );
     FEntry *nfst = (FEntry*)( nFstData.data() );
     //make the new root entry
@@ -210,7 +210,7 @@ bool U8::RenameEntry( const QString &path, const QString &newName )
             ne->FileOffset = qFromBigEndian( qFromBigEndian( e->FileOffset ) + dataAdjustment );// + qFromBigEndian( dataAdjustment );
             //qFromBigEndian( (quint32)( 0x20 + RU( U8_HEADER_ALIGNMENT, nFstSize ) + nPayload.size() ) );
             ne->FileLength = e->FileLength;
-            qDebug() << "old offset" << hex << qFromBigEndian( e->FileOffset ) << "new offset" << hex << qFromBigEndian( e->FileOffset ) + dataAdjustment;
+            qDebug() << "old offset" << Qt::hex << qFromBigEndian( e->FileOffset ) << "new offset" << Qt::hex << qFromBigEndian( e->FileOffset ) + dataAdjustment;
         }
 
     }
@@ -313,9 +313,9 @@ bool U8::ReplaceEntry( const QString &path, const QByteArray &nba, bool autoComp
     }
 
 
-    /*qDebug() << "old size:" << hex << oldSizePadded\
-        << "new size:" << hex << newSizePadded\
-        << "difference:" << hex << difference;*/
+    /*qDebug() << "old size:" << Qt::hex << oldSizePadded\
+        << "new size:" << Qt::hex << newSizePadded\
+        << "difference:" << Qt::hex << difference;*/
     QByteArray newData = nba;
     if( autoCompress )
     {
@@ -872,7 +872,7 @@ void U8::CreateEntryList()
                     if( folder != qFromBigEndian( fst[ current ].ParentOffset ) )
                     {
                         qWarning() << "U8::CreateEntryList -> error parsing the archive - recursion mismatch in"
-                                << path << "expected:" << hex << folder << "got:" << hex << qFromBigEndian( fst[ current ].ParentOffset )\
+                                << path << "expected:" << Qt::hex << folder << "got:" << Qt::hex << qFromBigEndian( fst[ current ].ParentOffset )\
                                 << "(" << FstName( qFromBigEndian( fst[ current ].ParentOffset ) ) << ")";
 
                         //some tools use "recursion" instead of "parent offset".
@@ -1016,8 +1016,8 @@ void U8::Load( const QByteArray &ba )
     rootnode_offset = qFromBigEndian( tmp );
     if( rootnode_offset != 0x20 )
     {
-        qWarning() << "rootnodeOffset" << hex << rootnode_offset;
-        qWarning() << hex << data.size();
+        qWarning() << "rootnodeOffset" << Qt::hex << rootnode_offset;
+        qWarning() << Qt::hex << data.size();
         hexdump( data );
     }
 

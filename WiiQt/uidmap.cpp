@@ -16,7 +16,7 @@ bool UIDmap::Check()
 {
     if( !data.size() || data.size() % 12 )
     {
-        qWarning() << "UIDmap::Check() bad size:" << hex << data.size();
+        qWarning() << "UIDmap::Check() bad size:" << Qt::hex << data.size();
         return false;
     }
 
@@ -32,7 +32,7 @@ bool UIDmap::Check()
     uid = qFromBigEndian( uid );
     if( tid != 0x100000002ull || uid != 0x1000 )//system menu should be the first entry
     {
-        qWarning() << "UIDmap::Check() system menu entry is messed up:" << hex << tid << uid;
+        qWarning() << "UIDmap::Check() system menu entry is messed up:" << Qt::hex << tid << uid;
         buf.close();
         return false;
     }
@@ -55,7 +55,7 @@ bool UIDmap::Check()
         }
         if( ( uid != 0x1000 + i ) || uids.contains( uid ) )
         {
-            qWarning() << "UIDmap::Check() uid error:" << QString( "%1" ).arg( tid, 16, 16, QChar( '0' ) ) << hex << uid;
+            qWarning() << "UIDmap::Check() uid error:" << QString( "%1" ).arg( tid, 16, 16, QChar( '0' ) ) << Qt::hex << uid;
             buf.close();
             return false;
         }
@@ -152,7 +152,7 @@ void UIDmap::CreateNew( quint8 addFactorySetupDiscs )
 		case 0x12:tid = qFromBigEndian( (quint64)( 0x0001000848414b00ull | reg ) ); break;
 		case 0x13:tid = qFromBigEndian( 0x0001000031323200ull ); break;
         default:
-            qWarning() << "oops" << hex << i;
+            qWarning() << "oops" << Qt::hex << i;
             return;
             break;
         }

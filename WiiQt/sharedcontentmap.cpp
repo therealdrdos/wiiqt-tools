@@ -12,7 +12,7 @@ bool SharedContentMap::Check( const QString &path )
 {
     if( !data.size() || data.size() % 28 )
     {
-        qWarning() << "SharedContentMap::Check -> bad size" << hex << data.size();
+        qWarning() << "SharedContentMap::Check -> bad size" << Qt::hex << data.size();
         return false;
     }
 
@@ -118,7 +118,7 @@ void SharedContentMap::AddEntry( const QString &app, const QByteArray &hash )
 {
     if( app.size() != 8 || hash.size() != 20 )
     {
-        qWarning() << "SharedContentMap::AddEntry -> bas size" << hex << app.size() << hash.size();
+        qWarning() << "SharedContentMap::AddEntry -> bas size" << Qt::hex << app.size() << hash.size();
         return;
     }
     data += app.toLatin1() + hash;

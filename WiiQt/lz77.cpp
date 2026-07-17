@@ -644,7 +644,7 @@ QByteArray LZ77_11::Decompress( QByteArray stuff )
 	QByteArray decompressedData( decompressedSize, '\0' );
 	if( (quint32)decompressedData.size() != decompressedSize )
 	{
-		qWarning() << "LZ77_11::Decompress -> failed to allocate" << hex << decompressedSize << "bytes";
+		qWarning() << "LZ77_11::Decompress -> failed to allocate" << Qt::hex << decompressedSize << "bytes";
 		return QByteArray();
 	}
 

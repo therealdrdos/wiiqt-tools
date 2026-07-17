@@ -68,7 +68,7 @@ bool NandBin::CreateNew( const QString &path, const QByteArray &keys, const QByt
 #else
     if( keys.size() != 0x400 || first8.size() != 0x108000 )
     {
-        qWarning() << "NandBin::CreateNew -> bad sizes" << hex << keys.size() << first8.size();
+        qWarning() << "NandBin::CreateNew -> bad sizes" << Qt::hex << keys.size() << first8.size();
         return false;
     }
 
@@ -168,7 +168,7 @@ bool NandBin::Format( bool secure )
 #else
     if( !f.isOpen() || fats.size() != 0x8000 )
     {
-        qWarning() << "NandBin::Format -> error" << hex << fats.size() << f.isOpen();
+        qWarning() << "NandBin::Format -> error" << Qt::hex << fats.size() << f.isOpen();
         return false;
     }
 
@@ -506,11 +506,11 @@ void NandBin::ShowLostClusters()
             break;
         default:
             lost++;
-            qDebug() << hex << i << fats.at( i );
+            qDebug() << Qt::hex << i << fats.at( i );
             break;
         }
     }
-    qDebug() << "found" << lost << "lost clusters\nUNK ( 0xffff )" << hex << ffs.size() << ffs <<
+    qDebug() << "found" << lost << "lost clusters\nUNK ( 0xffff )" << Qt::hex << ffs.size() << ffs <<
             "\nfree           " << frs.size();
 }
 
@@ -692,7 +692,7 @@ qint32 NandBin::FindSuperblock()
         f.read( (char*)&magic, 4 );//no need to switch endian here
         if( magic != 0x53464653 )
         {
-            qWarning() << "oops, this isnt a supercluster" << hex << loc << magic << currentSuperCluster;
+            qWarning() << "oops, this isnt a supercluster" << Qt::hex << loc << magic << currentSuperCluster;
             rewind++;
             //hexdump( sss );
             continue;
@@ -748,7 +748,7 @@ fst_t NandBin::GetFST( quint16 entry )
     int loc_entry = ( ( ( entry / 0x40 ) * n_fst[ type ] ) + entry ) * 0x20;
     if( (quint32)f.size() < loc_fst + loc_entry + sizeof( fst_t ) )
     {
-        qDebug() << hex << (quint32)f.size() << loc_fst << loc_entry << type << n_fst[ type ];
+        qDebug() << Qt::hex << (quint32)f.size() << loc_fst << loc_entry << type << n_fst[ type ];
         emit SendError( tr( "Tried to read fst_t beyond size of nand.bin" ) );
         fst.filename[ 0 ] = '\0';
         return fst;
@@ -851,7 +851,7 @@ const QByteArray NandBin::GetCluster( quint16 cluster_entry, bool decrypt )
     }
     if( cluster.size() != 0x4000 )
     {
-        qDebug() << "actual cluster size" << hex << cluster.size();
+        qDebug() << "actual cluster size" << Qt::hex << cluster.size();
         emit SendError( tr( "Error reading cluster" ) );
         return QByteArray();
     }
@@ -908,18 +908,18 @@ const QByteArray NandBin::GetFile( fst_t fst_ )
     /*if( data.size() != cluster_span * 0x4000 )
     {
     qDebug() << "data.size() != cluster_span * 0x4000 :: "
-        << hex << data.size()
+        << Qt::hex << data.size()
         << cluster_span
         << ( cluster_span * 0x4000 )
-        << "expected size:" << hex << fst.size;
+        << "expected size:" << Qt::hex << fst.size;
 
     emit SendError( tr( "Error reading file [ block size is not a as expected ] %1" ).arg( FstName( fst ) ) );
     }*/
     if( (quint32)data.size() < fst_.size )
     {
         qWarning() << "NandBin::GetFile() -> (quint32)data.size() < fst.size : "
-                << hex << data.size()
-                << "expected size:" << hex << fst_.size;
+                << Qt::hex << data.size()
+                << "expected size:" << Qt::hex << fst_.size;
 
         emit SendError( tr( "Error reading file [ returned data size is less that the size in the fst ]" ) );
         return QByteArray();
@@ -1138,7 +1138,7 @@ bool NandBin::WriteCluster( quint32 pageNo, const QByteArray &data, const QByteA
 {
     if( data.size() != 0x4000 )
     {
-        qWarning() << "NandBin::WriteCluster -> size:" << hex << data.size();
+        qWarning() << "NandBin::WriteCluster -> size:" << Qt::hex << data.size();
         return false;
     }
 
@@ -1192,7 +1192,7 @@ bool NandBin::WritePage( quint32 pageNo, const QByteArray &data )
     quint32 n_pagelen[] = { 0x800, 0x840, 0x840 };
     if( (quint32)data.size() != n_pagelen[ type ] )
     {
-        qWarning() << "data is wrong size" << hex << data.size();
+        qWarning() << "data is wrong size" << Qt::hex << data.size();
         return false;
     }
 
@@ -1552,7 +1552,7 @@ bool NandBin::SetData( quint16 idx, const QByteArray &data )
         QByteArray spr = page.right( 0x40 );
         if( !spr.startsWith( 0xff ) )
         {
-            qWarning() << "page" << hex << ( cl * 8 ) << "is bad??";
+            qWarning() << "page" << Qt::hex << ( cl * 8 ) << "is bad??";
             continue;
         }
         }*/
@@ -1731,7 +1731,7 @@ bool NandBin::CheckHmacData( quint16 entry )
 {
     if( entry > 0x17fe )
     {
-        qDebug() << "bad entry #" << hex << entry;
+        qDebug() << "bad entry #" << Qt::hex << entry;
         return false;
     }
 
@@ -1757,7 +1757,7 @@ bool NandBin::CheckHmacData( quint16 entry )
     {
         if( fat > 0x7fff )
         {
-            qDebug() << "fat is out of range" << hex << fat;
+            qDebug() << "fat is out of range" << Qt::hex << fat;
             return false;
         }
         QByteArray cluster = GetCluster( fat );			//hmac is calculated with the decrypted cluster data
@@ -1803,7 +1803,7 @@ bool NandBin::CheckHmacData( quint16 entry )
     return true;
 
     error:
-    qWarning() << FstName( fst ) << "is" << hex << fst.size << "bytes (" << clCnt << ") clusters";
+    qWarning() << FstName( fst ) << "is" << Qt::hex << fst.size << "bytes (" << clCnt << ") clusters";
     hexdump( sp1 );
     hexdump( sp2 );
     hexdump( hmac );
@@ -1855,7 +1855,7 @@ bool NandBin::CheckHmacMeta( quint16 clNo )
     return true;
 
     error:
-    qWarning() << "supercluster" << hex << clNo;
+    qWarning() << "supercluster" << Qt::hex << clNo;
     hexdump( sp1 );
     hexdump( sp2 );
     hexdump( hmac );

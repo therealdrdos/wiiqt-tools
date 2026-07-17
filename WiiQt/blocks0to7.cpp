@@ -22,7 +22,7 @@ bool Blocks0to7::SetBlocks( const QList<QByteArray> &blocks )
     {
         if( blocks.at( i ).size() != 0x20000 )
         {
-            qWarning() << "Blocks0to7::SetBlocks -> block" << i << "is" << hex << blocks.at( i ).size() << "bytes";
+            qWarning() << "Blocks0to7::SetBlocks -> block" << i << "is" << Qt::hex << blocks.at( i ).size() << "bytes";
             return false;
         }
     }

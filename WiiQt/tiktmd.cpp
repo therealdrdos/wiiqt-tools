@@ -299,7 +299,7 @@ Ticket::Ticket( const QByteArray &stuff, bool fixKeyIndex )
 			qWarning() << "Ticket::Ticket -> ticket uses the korean key. Only titles encrypted with the common key are supported";
 			return;
 		}
-		qWarning() << "Ticket::Ticket -> key index is" << hex << *keyindex << ". Setting it to 0 and fakesigning";
+		qWarning() << "Ticket::Ticket -> key index is" << Qt::hex << *keyindex << ". Setting it to 0 and fakesigning";
 
 		*keyindex = 0;//anything other than 0 or 1 is probably an error.  fix it
 		FakeSign();

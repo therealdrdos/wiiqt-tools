@@ -386,7 +386,7 @@ bool NusDownloader::DecryptCheckHashAndAppendData( const QByteArray &encData, qu
     QByteArray realHash = GetSha1( decData );
     if( realHash != curTmd.Hash( idx ) )
     {
-        qWarning() << "NusDownloader::DecryptCheckHashAndAppendData -> hash doesnt match for content" << hex << idx;
+        qWarning() << "NusDownloader::DecryptCheckHashAndAppendData -> hash doesnt match for content" << Qt::hex << idx;
         //CurrentJobErrored( tr( "Downloaded data has a different hash than expected." ) );
         hexdump( realHash );
         hexdump( curTmd.Hash( idx ) );

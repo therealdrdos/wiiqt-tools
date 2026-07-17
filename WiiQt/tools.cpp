@@ -192,7 +192,7 @@ bool IsValidSave( const SaveGame &save )
         }
         else		//unknown attribute
         {
-            qWarning() << "IsValidSave :unknown attribute" << i << hex << attr << NAND_ATTR_TYPE( attr );
+            qWarning() << "IsValidSave :unknown attribute" << i << Qt::hex << attr << NAND_ATTR_TYPE( attr );
             return false;
         }
 

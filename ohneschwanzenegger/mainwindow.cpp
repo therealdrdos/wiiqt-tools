@@ -94,7 +94,7 @@ void MainWindow::SaveSettings()
     s.endGroup();
 }
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #define PATH_PREFIX QString("../..")
 #else
 #define PATH_PREFIX QString("..")

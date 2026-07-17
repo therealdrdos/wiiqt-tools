@@ -1,4 +1,5 @@
 #include "tools.h"
+#include <QRegularExpression>
 #include "includes.h"
 #include "aes.h"
 #include "sha1.h"
@@ -256,7 +257,7 @@ QString CleanSvnStr( const QString &orig )
     if( ret.isEmpty() )
         return ret;
 
-    QRegExp notNum( "[^0-9]" );
+    QRegularExpression notNum( "[^0-9]" );
     QStringList parts = ret.split( notNum, Qt::SkipEmptyParts );
     if( parts.size() )
         return parts.at( parts.size() - 1 );

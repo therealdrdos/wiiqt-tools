@@ -1,4 +1,5 @@
 #include "nandbin.h"
+#include <QRandomGenerator>
 #include "tools.h"
 
 NandBin::NandBin( QObject * parent, const QString &path ) : QObject( parent )
@@ -1513,8 +1514,6 @@ bool NandBin::SetData( quint16 idx, const QByteArray &data )
         }
 
         //setup random number stuff to emulate wear leveling
-        QTime midnight( 0, 0, 0 );
-        qsrand( midnight.secsTo( QTime::currentTime() ) );
 
         //now grab the clusters that will be used from the list
         //qDebug() << "trying to find" << ( clCnt - fts.size() ) << "free clusters";
@@ -1524,7 +1523,7 @@ bool NandBin::SetData( quint16 idx, const QByteArray &data )
                 return false;
 
             //grab a random cluster from the list
-            quint16 idx = qrand() % freeClusters.size();
+            quint16 idx = QRandomGenerator::global()->bounded( freeClusters.size() );
             quint16 cl = freeClusters.takeAt( idx );	//remove this number from the list
 
             fts << cl;					//add this one to the clusters that will be used to hold the data

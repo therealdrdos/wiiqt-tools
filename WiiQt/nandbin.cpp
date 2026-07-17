@@ -328,7 +328,7 @@ bool NandBin::AddChildren( QTreeWidgetItem *parent, quint16 entry )
 
 const QString NandBin::FstName( fst_t fst )
 {
-    QByteArray ba( (char*)fst.filename, 0xc );
+    QByteArray ba( (char*)fst.filename, qstrnlen( (char*)fst.filename, 0xc ) );
     QString ret = QString( ba );
     if( fatNames )
     {

@@ -1,0 +1,25 @@
+name: build
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.11.1'
+      - name: build ohneschwanzenegger
+        run: |
+          mkdir build-ohne && cd build-ohne
+          qmake ../ohneschwanzenegger/refleurii.pro
+          make -j$(sysctl -n hw.ncpu)
+      - name: build nandBinCheck
+        run: |
+          mkdir build-nbc && cd build-nbc
+          qmake ../nandBinCheck/nandBinCheck.pro
+          make -j$(sysctl -n hw.ncpu)

@@ -10,7 +10,6 @@
 #include "../WiiQt/tiktmd.h"
 #include "../WiiQt/settingtxtdialog.h"
 #include "../WiiQt/u8.h"
-#include "../WiiQt/keysbin.h"
 
 //yippie for global variables
 QStringList args;

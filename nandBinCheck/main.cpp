@@ -828,9 +828,9 @@ bool CheckTitleIntegrity( quint64 tid )
         quint16 vers = t.Version();
         qDebug() << "\tversion:" << qPrintable( QString( "%1.%2" ).arg( ( vers >> 8 ) & 0xff ).arg( vers & 0xff ).leftJustified( 10 ) )
                 << qPrintable( QString( "%1" ).arg( vers ).leftJustified( 10 ) )
-                << "hex:" << hex << t.Version();
+                << "hex:" << Qt::hex << t.Version();
         if( t.AccessFlags() )
-            qDebug() << "\taccess :" << hex << t.AccessFlags();
+            qDebug() << "\taccess :" << Qt::hex << t.AccessFlags();
     }
 
     quint64 ios = t.IOS();
@@ -1022,7 +1022,7 @@ void CheckLostClusters()
 {
     QList<quint16> u = nand.GetFatsForEntry( 0 );//all clusters actually used for a file
     if( verbose )
-        qDebug() << "total used clusters" << hex << u.size() << "of 0x8000";
+        qDebug() << "total used clusters" << Qt::hex << u.size() << "of 0x8000";
     quint16 lost = 0;
     QList<quint16> ffs;
     QList<quint16> frs;
@@ -1049,7 +1049,7 @@ void CheckLostClusters()
             break;
         }
     }
-    qDebug() << "found" << lost << "lost clusters\nUNK ( 0xffff )" << hex << ffs.size() << ffs <<
+    qDebug() << "found" << lost << "lost clusters\nUNK ( 0xffff )" << Qt::hex << ffs.size() << ffs <<
             "\nfree           " << frs.size();
 }
 

@@ -232,7 +232,7 @@ void NewNandBin::on_pushButton_badBlockFile_clicked()
     ui->listWidget_badBlocks->clear();
 
     str.replace( "\r\n", "\n" );
-    QStringList lines = str.split( "\n", QString::SkipEmptyParts );
+    QStringList lines = str.split( "\n", Qt::SkipEmptyParts );
     foreach( const QString &line, lines )
     {
         if( line.size() > 5 )

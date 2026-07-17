@@ -6,6 +6,8 @@ QT += core \
       network \
       widgets
 
+CONFIG += c++17 sdk_no_version_check
+
 TARGET = ohneschwanzenegger
 TEMPLATE = app
 DEFINES += NAND_BIN_CAN_WRITE
@@ -42,13 +44,8 @@ FORMS += mainwindow.ui \
     newnandbin.ui
 RESOURCES += rc.qrc
 
-
-# create new svnrev.h
-unix {
-    system( chmod 755 ../tools/makesvnrev.sh )
-    system( ../tools/makesvnrev.sh )
-}
-
-win32 {
-    system( "..\\tools\\SubWCRev.exe" "." "..\\tools\\svnrev_template.h" ".\\svnrev.h" )
+macx {
+    QMAKE_APPLE_DEVICE_ARCHS = arm64
+    QMAKE_TARGET_BUNDLE_PREFIX = org.drdos
+    QMAKE_BUNDLE = ohneschwanzenegger
 }

@@ -113,7 +113,7 @@ void PrintColoredString( const char *msg, int highlite )
     else
     {
         QString str( msg );
-        QStringList list = str.split( "\n", QString::SkipEmptyParts );
+        QStringList list = str.split( "\n", Qt::SkipEmptyParts );
         foreach( const QString &s, list )
         {
             QString m = s;
@@ -1195,7 +1195,7 @@ void CheckSettingTxt()
     bool shownSetting = false;
     QString str( settingTxt );
     str.replace( "\r\n", "\n" );//maybe not needed to do this in 2 steps, but there may be some reason the file only uses "\n", so do it this way to be safe
-    QStringList parts = str.split( "\n", QString::SkipEmptyParts );
+    QStringList parts = str.split( "\n", Qt::SkipEmptyParts );
     foreach( const QString &part, parts )
     {
         if( part.startsWith( "AREA=" ) )

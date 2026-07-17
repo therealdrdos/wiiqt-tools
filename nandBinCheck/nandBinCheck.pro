@@ -16,6 +16,8 @@ TEMPLATE = app
 QT += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+CONFIG += c++17 sdk_no_version_check
+
 SOURCES += main.cpp \
     ../WiiQt/blocks0to7.cpp \
     ../WiiQt/tiktmd.cpp \
@@ -46,12 +48,4 @@ HEADERS += ../WiiQt/tiktmd.h \
 FORMS += \
     ../WiiQt/settingtxtdialog.ui
 
-# create new svnrev.h
-unix {
-    system( chmod 755 ../tools/makesvnrev.sh )
-    system( ../tools/makesvnrev.sh )
-}
-
-win32 {
-    system( "..\\tools\\SubWCRev.exe" "." "..\\tools\\svnrev_template.h" ".\\svnrev.h" )
-}
+macx: QMAKE_APPLE_DEVICE_ARCHS = arm64

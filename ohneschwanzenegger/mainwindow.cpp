@@ -30,10 +30,10 @@ MainWindow::MainWindow( QWidget *parent ) : QMainWindow( parent ), ui( new Ui::M
 
     //resize buttons to be same size
     QFontMetrics fm( fontMetrics() );
-    int max = fm.width( ui->pushButton_CachePathBrowse->text() );
-    max = MAX( max, fm.width( ui->pushButton_GetTitle->text() ) );
-    max = MAX( max, fm.width( ui->pushButton_initNand->text() ) );
-    max = MAX( max, fm.width( ui->pushButton_nandPath->text() ) );
+    int max = fm.horizontalAdvance( ui->pushButton_CachePathBrowse->text() );
+    max = MAX( max, fm.horizontalAdvance( ui->pushButton_GetTitle->text() ) );
+    max = MAX( max, fm.horizontalAdvance( ui->pushButton_initNand->text() ) );
+    max = MAX( max, fm.horizontalAdvance( ui->pushButton_nandPath->text() ) );
 
     max += 20;
     ui->pushButton_CachePathBrowse->setFixedWidth( max );

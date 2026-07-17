@@ -1,4 +1,5 @@
 #include "nandbin.h"
+#include <algorithm>
 #include <QRandomGenerator>
 #include "tools.h"
 
@@ -1559,7 +1560,7 @@ bool NandBin::SetData( quint16 idx, const QByteArray &data )
         }
     }
     //sort clusters so file is written in order ( not like it matters on flash memory, though )
-    qSort( fts.begin(), fts.end() );
+    std::sort( fts.begin(), fts.end() );
     //qDebug() << "about to writing shit" << clCnt << fts.size();
     //qDebug() << "file will be on clusters\n" << hex << fts;
     for( quint32 i = 0; i < clCnt; i++ )

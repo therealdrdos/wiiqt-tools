@@ -1,0 +1,76 @@
+#+TITLE: wiiqt-tools
+#+OPTIONS: toc:nil num:nil
+
+Wii NAND tools from giantpune's WiiQt, revived for Qt 6 and Apple Silicon.
+
+Two tools share the =WiiQt/= library:
+
+- =ohneschwanzenegger= - GUI NAND builder: create a nand.bin, download titles
+  from NUS, install WADs, edit setting.txt.
+- =nandBinCheck= - CLI verifier: boot1/2, filesystem, ECC/HMAC, signatures.
+
+Fork of [[https://github.com/trapexit/wiiqt][trapexit/wiiqt]]. Only these two tools and the shared library build on Qt 6; the other
+subprojects are untouched.
+
+* Build
+
+Needs Qt 6 and a C++17 compiler. Tested with MacPorts =qt6-qtbase= 6.11 on arm64
+macOS, where qmake is =qmake6=. Out of tree:
+
+#+BEGIN_SRC sh
+qmake ohneschwanzenegger/refleurii.pro   # or nandBinCheck/nandBinCheck.pro
+make -j$(getconf _NPROCESSORS_ONLN)
+#+END_SRC
+
+macOS app bundle:
+
+#+BEGIN_SRC sh
+macdeployqt ohneschwanzenegger.app
+codesign --force --deep --sign - ohneschwanzenegger.app   # ad-hoc, local only
+#+END_SRC
+
+Tagged builds attach two assets via CI: =ohneschwanzenegger-<tag>-arm64.dmg=
+(GUI app) and =nandBinCheck-<tag>-arm64.zip= (standalone CLI). Both are ad-hoc
+signed, not notarized - clear quarantine or right-click -> Open on first launch.
+
+* Usage
+
+=nandBinCheck=:
+
+#+BEGIN_SRC sh
+nandBinCheck nand.bin -fs -spare -boot   # -all for everything, -v for verbose
+#+END_SRC
+
+A type-1 dump (0x21000000) needs =keys.bin= in the same directory; a type-2 dump
+(0x21000400) carries the keys.
+
+=ohneschwanzenegger= loads a nand.bin (Init Nand), builds a fresh one (New Nand),
+and installs titles from NUS (Get It!, e.g. an update string like =4.3E=) or from
+WADs. It has no filesystem browser - use =nandBinCheck= to inspect.
+
+* Qt 6 port
+
+Mechanical, no behavioural change to the crypto/NAND code: qualified stream
+manipulators (=Qt::hex=), =QRegExp= -> =QRegularExpression=, =qrand= ->
+=QRandomGenerator=, =qSort= -> =std::sort=, =QTime= interval timer ->
+=QElapsedTimer=, =QFontMetrics::width= -> =horizontalAdvance=, and the
+=QString(QByteArray)= change (fixed-size name fields trimmed at the first null).
+=aes.c=, =sha1.c= and the ECC/HMAC code are untouched.
+
+* Credits
+
+WiiQt and these tools: giantpune. Wii crypto and reverse engineering: Segher
+Boessenkool, bushing, marcan, comex, trap15, grey, parannoyed. AES: Mike Scott.
+SHA-1: Paul E. Jones. Upstream collection: trapexit.
+
+* License
+
+GPL-2.0, see =COPYING=. The tree mixes GPL-2.0 sources (giantpune, Segher) with
+permissively licensed AES/SHA-1; GPL-2.0 is the only consistent umbrella.
+
+* Notes
+
+- You need your own NAND dumps and keys to use these tools.
+- =Get It!= depends on Nintendo's NUS CDN, which is partly decommissioned.
+- Writing a NAND can brick a console. Verify with =nandBinCheck= first and keep a
+  recovery (BootMii). Not affiliated with Nintendo.

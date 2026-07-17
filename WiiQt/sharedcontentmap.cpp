@@ -51,7 +51,7 @@ bool SharedContentMap::Check( const QString &path )
     {
         cid = data.mid( ( i * 28 ), 8 );
         QString appName( cid );
-        QFileInfo fi = dir.absoluteFilePath( appName + ".app" );
+        QFileInfo fi( dir.absoluteFilePath( appName + ".app" ) );
         if( !fi.exists() )
         {
             qWarning() << "SharedContentMap::Check -> content in the map isnt found in" << path;

@@ -1,0 +1,38 @@
+name: release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  dmg:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.11.1'
+      - name: build
+        run: |
+          ( mkdir build-ohne && cd build-ohne && qmake ../ohneschwanzenegger/refleurii.pro && make -j$(sysctl -n hw.ncpu) )
+          ( mkdir build-nbc  && cd build-nbc  && qmake ../nandBinCheck/nandBinCheck.pro  && make -j$(sysctl -n hw.ncpu) )
+      - name: package
+        run: |
+          app=build-ohne/ohneschwanzenegger.app
+          cp build-nbc/nandBinCheck "$app/Contents/MacOS/"
+          macdeployqt "$app" -executable="$app/Contents/MacOS/nandBinCheck" -codesign=-
+          hdiutil create -volname ohneschwanzenegger -srcfolder "$app" -ov -format UDZO \
+            ohneschwanzenegger-${GITHUB_REF_NAME}-arm64.dmg
+          mkdir -p nandBinCheck/bin
+          cp "$app/Contents/MacOS/nandBinCheck" nandBinCheck/bin/
+          ditto "$app/Contents/Frameworks" nandBinCheck/Frameworks
+          codesign --force --sign - nandBinCheck/bin/nandBinCheck
+          ditto -c -k --keepParent nandBinCheck nandBinCheck-${GITHUB_REF_NAME}-arm64.zip
+      - uses: softprops/action-gh-release@v3
+        with:
+          files: |
+            ohneschwanzenegger-*-arm64.dmg
+            nandBinCheck-*-arm64.zip
